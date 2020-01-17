@@ -1,10 +1,15 @@
 .container{
   width: 60vw;
   margin: 50px auto;
-  border: 1px solid;
+  padding:20px;
   text-align: center;
+  box-shadow:inset 4px 4px 15px 10px rgba(176,176,176,0.75);
+
 }
 
 h2{
   border-bottom: 1px solid #000;
+  border-top: 1px solid #000;
+
 }
+

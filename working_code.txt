@@ -1,30 +1,21 @@
+
 import React, {useState, useEffect} from 'react';
+import {apiData} from './data/api';
 import {NestedLists} from './components/NestedLists';
 import './App.css';
-import axios from 'axios';
 
 
 const App = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(() => {
+    setLoading(true);
+    return apiData;
+  });
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    init();
+    unflatten(data);
   }, []);
-
-  const init =  async () => {
-    setLoading(true);    
-    await axios.get("http://localhost:3001/apiData").then(resp =>{
-      setData(resp.data);
-      unflatten(resp.data);      
-    }).catch(err =>{
-      setError(true);
-    })
-    setLoading(false);
-  }
-
   const unflatten = indata => {
     let nodes;
     if(indata){
@@ -47,14 +38,7 @@ const App = () => {
   const showLoader = () => {
     if(loading){
       return (
-        <p data-testid="loadingtestid">Loading....</p>
-      )
-    }
-  }
-  const showError = () => {
-    if(error){
-      return (
-        <p data-testid="errortestid">There is some issue in getting the results. We will be back soon.</p>
+        <p>Loading....</p>
       )
     }
   }
@@ -62,14 +46,13 @@ const App = () => {
   return (
     <div className="container">
        {showLoader()}
-       {showError()}
-       <h2 data-testid="firstList">First list untouched</h2>
+       <h2>First list untouched</h2>
        <ul>
        {data.map((el, i) => (
          <li>{el.id}</li>
        ))}
       </ul>
-       <h2 data-testid="secondList">Second list Manipulated</h2>
+       <h2>Second list Manipulated</h2>
        <NestedLists filteredData = {filteredData} />
       </div>
   )
