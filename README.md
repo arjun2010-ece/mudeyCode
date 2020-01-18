@@ -24,5 +24,5 @@ Features:
 ===========
 1. code
 2. test
-3.eslint config mentioned.
+3. eslint config mentioned.
 4. loading/error mentioned
